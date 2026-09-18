@@ -1,13 +1,6 @@
-# Dev.N3L0.Studios.
-Photography studio website
-PART 1:
-Business Overview:
-dev.NeloStudios Photography Studio is an upcoming creative photography and videography studio focused on professional visual content for individuals, businesses, events and brands. The studio will combine photography, video production, editing and aerial content.
-About Us:
-The studio aims to capture important moments and create professional images and videos for personal memories, marketing, branding, events, products and social media.
-Our Mission:
-Our mission is to create high-quality photographs and videos that tell meaningful stories, promote brands and preserve important moments while providing reliable creative services.
+# dev.N3L0.Studios
 
+part 1:
 Our Vision:
 Our vision is to grow dev.NeloStudios into a recognised photography and videography studio known for creativity, professionalism, modern equipment and excellent customer service.
 Target Audience:
@@ -17,15 +10,33 @@ Target Audience:
 •	Models, artists and content creators
 •	Schools and organisations
 •	Social-media creators
-Services:
-•	Portrait and studio photography
-•	Wedding and event photography
-•	Product and commercial photography
-•	Corporate and promotional content
-•	Videography and social-media content
-•	Outdoor and lifestyle photography
-•	Drone photography and aerial videography
-•	Photo retouching, colour grading and video editing
+
+Startup Budget Example:
+A realistic professional startup should budget for the camera system, drone, lighting, audio, stabilisation, storage, editing computer, cases and studio accessories. Depending on the selected camera/drone tier, the equipment investment can easily move into the R200 000–R350 000+ range before premises, insurance, website costs and other business expenses.
+Website Features:
+•	Homepage with hero photography/video
+•	About page
+•	Services and packages
+•	Portfolio gallery
+•	Booking/enquiry form
+•	Testimonials
+•	Contact and social media links
+•	Mobile responsive design
+•	Optimised photography and video galleries
+Timeline and Milestones:
+•	Week 1: Business research, service planning and equipment requirements
+•	Week 2: Website structure, branding and portfolio planning
+•	Week 3: HTML/CSS development, responsive design and JavaScript
+•	Week 4: Testing, debugging and final content
+
+Technical Requirements:
+•	Domain: To be confirmed
+•	HTML, CSS and JavaScript
+•	Responsive desktop/tablet/mobile design
+•	Image compression and optimisation
+•	Video optimisation
+•	Git/GitHub repository
+•	Secure booking/contact form
 
 Website Goals and Objectives:
 •	Build brand awareness
@@ -34,3 +45,79 @@ Website Goals and Objectives:
 •	Allow booking and quotation enquiries
 •	Build trust through testimonials
 •	Create a fast, responsive mobile-friendly website
+
+Part 2 Update Notes
+
+This covers the changes made to the site to align it with the Part 2 brief
+(CSS Styling and Responsive Design) required from the guidelines/rubric. Every image
+tag was left in its original position in the layout nothing was added,
+removed, or reordered only attributes on those tags were extended.
+
+## 1
+my nav links pointed to `About Us.html`, `Products & Services.html` and
+`News & Updates.html`, but spaces and `&` in filenames break links on real
+web servers (the `&` especially, since it's a reserved URL character). The
+files are renamed to URL-safe names and every `href` across all six pages
+now points to the correct one
+
+## 2. Body classes added
+`style.css` already had a full set of per page rules (`body.page-index`,
+`body.page-about`, `body.page-contact`, `body.page-gallery`,
+`body.page-news`, `body.page-products`) but none of the HTML `body` tags
+actually carried those classes, so none of that page specific CSS
+backgrounds, page specific colours, form styling was being applied.
+Each page now has its matching class, e.g. `<body class="page-gallery">`.
+
+## 3. `rel="Stylesheet"` casing
+`Index.html` had `rel="Stylesheet"` (capital S). Browsers accept it, but
+it's fixed to lowercase `rel="stylesheet"` for standards consistency with
+the other five pages.
+
+## 4. Relative units (brief 3.2)
+Several fixed-pixel sizes in `style.css` were converted to `rem` so they
+scale with the base font size instead of staying rigid, per the "use
+relative units like `em`/`rem`" requirement:
+- Logo (`header img`): `110px` → `6.875rem` (desktop), `90px` → `5.625rem` (mobile breakpoint)
+- Instagram image: `500px` → `31.25rem`
+- Gallery video width: `500px` → `31.25rem`
+- Gallery "creative work" images: `500px` → `31.25rem`
+- Photography grid image height: `300px` → `18.75rem`
+- Packages/pricing image: `900px` → `56.25rem`
+- News page pricing image inline style: `700px` → `43.75rem`
+
+Widths/heights that were already `%`-based (main content, forms, lists,
+videos) were left as-is — they already satisfy this requirement.
+
+## 5. Responsive images with `srcset`/`sizes` (brief 3.3)
+This was the one requirement not implemented anywhere in the original
+markup. It's now added in two patterns:
+
+- **Logo and pricing images** (`header img`, packages image, news pricing
+  image): a `1x`/`2x` `srcset` for high-density (retina) screens, e.g.
+  `srcset="images/photo.jpg 1x, images/photo@2x.jpg 2x"`.
+- **Photography grid images** (`Gallery.html`): a full width-descriptor
+  `srcset` with a matching `sizes` attribute, so the browser picks the
+  right file for the column width at each breakpoint:
+  ```html
+  srcset="images/studio1-480w.jpg 480w, images/studio1-800w.jpg 800w, images/studio1-1200w.jpg 1200w"
+  sizes="(max-width: 768px) 100vw, (max-width: 1100px) 33vw, 350px"
+  ```
+
+**Action needed from you:** the `srcset` markup references extra image
+files (e.g. `photo@2x.jpg`, `studio1-480w.jpg`, `studio1-800w.jpg`,
+`studio1-1200w.jpg`) that don't exist in your `images/` folder yet. The
+code is correct and will work as soon as you export those extra
+resolutions from your originals and drop them into `images/` alongside the
+existing files. Until then, browsers will just fall back to the plain
+`src` image, so nothing is broken in the meantime.
+
+## 6. `&` escaped in page titles/headings
+`Products & Services` and `News & Updates` (and similar) now i use `&amp;`
+in the HTML text content (`<title>`, `<h1>`, `<h2>`) `&` 
+## What was left untouched
+ All image `src` positions and the surrounding markup structure every
+  `<img>` still sits exactly where you placed it.
+ The overall colour palette, grid/flexbox layout, and breakpoints in
+  `style.css` these already matched the brief.
+ The booking form fields and video placeholders.
+
